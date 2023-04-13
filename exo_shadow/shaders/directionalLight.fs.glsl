@@ -47,6 +47,7 @@ float CalcShadowFactor(){
     float z = 0.5 * ProjCoords.z +0.5;
     float Depth = texture(uShadowMap, UVCoords).x;
 
+    //to avoid shadow acne
     float bias = 0.0025;
 
     if(Depth + bias < z)
@@ -57,5 +58,5 @@ float CalcShadowFactor(){
 }
 
 void main() {
-    fFragColor = vec4(calcShadowFactor()*blinnPhong(),1.);
+    fFragColor = vec4(CalcShadowFactor()*blinnPhong(),1.);
 };
