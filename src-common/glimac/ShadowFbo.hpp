@@ -20,5 +20,5 @@ public:
 
     void BindForWriting();
 
-    void BindForReading(GLenum TerxtureUnit);
+    void BindForReading(GLenum TextureUnit);
 };

@@ -29,6 +29,7 @@ vec3 blinnPhong(){
     return Li*(uKd*(dot(wi, N))+uKs*pow(dot(halfVector,N),uShininess));
 }
 
+//is there another fragment on the light source to this fragment with a smaller depth ?
 float CalcShadowFactor(){
 
     //ClipSpace LightMVP * Position

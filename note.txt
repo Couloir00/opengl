@@ -11,7 +11,23 @@ directionalLight.fs --> in progress
 
 main.cpp --> not updated at all
 
+
+shadowMapPass --> in progress
+ - Do not forget to make a shadowMap struct
+ - should shadowMapPass be a function if so don't forget to define it
+ - ViewMatrixLight
+ - shadowOrthoProjMat
+ - earthProgram.render()
+
+- dividing the main into a LightingPass and a ShadowMapPass
+
+
+- starting calcLightInternal
 - se concentrer sur le uShadowMap 
 - se concentrer sur les shaders
 - mettre dans le main pour les afficher
 - au final je dois avoir 2 caméras. Une qui suit la lumière pour les ombres et une autre qui est notre point de vue
+
+
+possibles bugs:  
+MVMatrix     = glm::rotate(MVMatrix, -ctx.time(), glm::vec3(0, 1, 0));

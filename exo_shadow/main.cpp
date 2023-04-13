@@ -1,10 +1,22 @@
 #include <vector>
 #include "glimac/FreeflyCamera.hpp"
+#include "glimac/ShadowFbo.hpp"
 #include "glimac/sphere_vertices.hpp"
 #include "glm/ext/scalar_constants.hpp"
 #include "glm/gtc/random.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "p6/p6.h"
+
+struct ShadowProgram {
+    p6::Shader m_Program;
+    GLint      uMVPLight;
+
+    ShadowProgram()
+        : m_Program(p6::load_shader("shaders/shadowMap.vs.glsl", "shaders/shadowMap.fs.glsl"))
+    {
+        uMVPLight = glGetUniformLocation(m_Program.id(), "uMVPLight");
+    }
+};
 
 struct EarthProgram {
     p6::Shader m_Program;
@@ -91,8 +103,9 @@ int main()
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
     /*INITIALIZATION CODE*/
-    EarthProgram earthProgram;
-    MoonProgram  moonProgram;
+    ShadowProgram shadowProgram;
+    EarthProgram  earthProgram;
+    MoonProgram   moonProgram;
 
     GLuint vbo = 0;
     glGenBuffers(1, &vbo);
@@ -176,6 +189,67 @@ int main()
         {
             ViewMatrix.rotateLeft(-0.1);
         }
+
+        //********************************************
+        //                  SHADOW MAP PASS
+        //********************************************
+        void ShadowMapPass()
+        {
+            m_shadowMapFBO.BindForWriting();
+            glClear(GL_DEPTH_BUFFER_BIT);
+            // m_shadowMapTech.Enable(); = glUseProgram()
+            shadowProgram.m_Program.use();
+
+            // do this for every object
+            // WorldView Matrix comes from the object itself
+            glBindVertexArray(vao);
+            {
+                glm::mat4 MVMatrix = ViewMatrixLight.getViewMatrix();
+                MVMatrix           = glm::rotate(MVMatrix, -ctx.time(), glm::vec3(0, 1, 0));
+                glUniformMatrix4fv(shadowProgram.uMVPLight, 1, GL_FALSE, glm::value_ptr(shadowOrthoProjMat * MVMatrix));
+            }
+
+            earthProgram.render();
+
+            // I stopped here
+
+            // do this for every object
+            // WorldView Matrix comes from the object itself
+
+            // glm::mat4 World = m_pMesh1->GetWorldMatrix();
+
+            // // ViewMatrix from the light point of view
+            // glm::mat4 LightView;
+            // glm::vec3 Up(0.0f, 1.0f, 0.0f);
+            // LightView.InitCameraTransform(m_spotLight.WorldPosition, m_spotLight.WorldDirection, Up); // Init Camera transform combines translation and rotation matrix
+
+            // // MVP Matrix for the light source
+            // glm::mat4 MVP = m_lightPersProjMatrix * LightView * World;
+            // m_shadowMapTech.SetMVP(MVP);
+            // m_pMesh1->Render();
+
+            // if the terrain is rough we should render it into the shadow map as well
+        }
+
+        //********************************************
+
+        //********************************************
+        //                   LIGHTING PASS
+        //********************************************
+        void LightingPass()
+        {
+            // see 11min video
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            // change
+            glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+            LightingProgram.m_Program.use();
+            m_shadowMapFBO.BindForReading(SHADOW_TEXTURE_UNIT);
+        }
+
+        //********************************************
 
         glClearColor(0.2f, 0.2f, 0.2f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
