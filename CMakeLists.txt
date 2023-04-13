@@ -48,3 +48,10 @@ endfunction(add_exercise)
 
 add_exercise(TP3_exo1_triangle_blanc)
 add_exercise(TP3_exo2_triangle_couleurs)
+add_exercise(exo_sphere)
+add_exercise(exo_multitexturing)
+add_exercise(exo_ffcam)
+add_exercise(exo_dirLight)
+add_exercise(exo_ponctLight)
+add_exercise(exo_shadow)
+
