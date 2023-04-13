@@ -13,8 +13,8 @@ private:
     GLuint       m_shadowMap;
 
 public:
-    ShadowMapFBO()  = default;
-    ~ShadowMapFBO() = default;
+    ShadowMapFBO() = default;
+    ~ShadowMapFBO();
 
     bool Init(unsigned int width, unsigned int height);
 

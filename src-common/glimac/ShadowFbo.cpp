@@ -2,6 +2,12 @@
 #include "glimac/ShadowFbo.hpp"
 #include "p6/p6.h"
 
+ShadowMapFBO::~ShadowMapFBO()
+{
+    glDeleteFramebuffers(1, &m_fbo);
+    glDeleteTextures(1, &m_shadowMap);
+}
+
 bool ShadowMapFBO::Init(unsigned int width, unsigned int height)
 {
     // the higher the resolution the more accurate the shadow will be
