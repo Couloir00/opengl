@@ -1,0 +1,5 @@
+Pour les Shadows:
+
+- se concentrer sur le vShadowMap (uTexture)
+- se concentrer sur les shaders
+- mettre dans le main pour les afficher
