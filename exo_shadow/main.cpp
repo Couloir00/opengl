@@ -19,6 +19,10 @@ struct EarthProgram {
     GLint uLightDir_vs;
     GLint uLightIntensity;
 
+    // Shadow
+    GLint uMVPLight;
+    GLint uShadowMap;
+
     EarthProgram()
         : m_Program(p6::load_shader("shaders/3D.vs.glsl", "shaders/directionalLight.fs.glsl"))
     {
@@ -32,6 +36,10 @@ struct EarthProgram {
 
         uLightDir_vs    = glGetUniformLocation(m_Program.id(), "uLightDir_vs");
         uLightIntensity = glGetUniformLocation(m_Program.id(), "uLightIntensity");
+
+        // Shadow
+        uMVPLight  = glGetUniformLocation(m_Program.id(), "uMVPLight");
+        uShadowMap = glGetUniformLocation(m_Program.id(), "uShadowMap");
     }
 };
 
@@ -48,6 +56,10 @@ struct MoonProgram {
     GLint uLightDir_vs;
     GLint uLightIntensity;
 
+    // Shadow
+    GLint uMVPLight;
+    GLint uShadowMap;
+
     MoonProgram()
         : m_Program(p6::load_shader("shaders/3D.vs.glsl", "shaders/directionalLight.fs.glsl"))
     {
@@ -61,6 +73,10 @@ struct MoonProgram {
 
         uLightDir_vs    = glGetUniformLocation(m_Program.id(), "uLightDir_vs");
         uLightIntensity = glGetUniformLocation(m_Program.id(), "uLightIntensity");
+
+        // Shadow
+        uMVPLight  = glGetUniformLocation(m_Program.id(), "uMVPLight");
+        uShadowMap = glGetUniformLocation(m_Program.id(), "uShadowMap");
     }
 };
 

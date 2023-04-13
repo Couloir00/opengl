@@ -18,7 +18,7 @@ out vec4 fFragColor;
 
 //for shadow only
 in vec4 vLightSpacePos;
-uniform sampler2D vShadowMap;
+uniform sampler2D uShadowMap;
 
 vec3 blinnPhong(){
     vec3 wi= normalize(uLightDir_vs);
@@ -44,7 +44,7 @@ float CalcShadowFactor(){
     UVCoords.x =0.5*ProjCoords.x+0.5;
     UVCoords.y =0.5*ProjCoords.y+0.5;
     float z = 0.5 * ProjCoords.z +0.5;
-    float Depth = texture(vShadowMap, UVCoords).x;
+    float Depth = texture(uShadowMap, UVCoords).x;
 
     float bias = 0.0025;
 
@@ -56,5 +56,5 @@ float CalcShadowFactor(){
 }
 
 void main() {
-    fFragColor = vec4(blinnPhong(),1.);
+    fFragColor = vec4(calcShadowFactor()*blinnPhong(),1.);
 };

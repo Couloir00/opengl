@@ -3,8 +3,8 @@
 layout(location = 0) in vec3 aVertexPosition;
 
 //a changer
-uniform mat4 uMVPMatrix;
+uniform mat4 uMVPLight;
 
-void{
-    gl_Position = MVP * vec4(Position, 1.0);
+void main(){
+    gl_Position = uMVPLight * vec4(aVertexPosition, 1.0);
 }

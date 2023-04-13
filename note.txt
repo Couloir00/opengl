@@ -1,5 +1,14 @@
 Pour les Shadows:
 
-- se concentrer sur le vShadowMap (uTexture)
+shadowMap.fs --> OK
+shadowMap.vs --> OK
+
+directionalLight.fs --> in progress
+3D.vs. --> in progress
+
+main.cpp --> not updated at all
+
+- se concentrer sur le uShadowMap 
 - se concentrer sur les shaders
 - mettre dans le main pour les afficher
+- au final je dois avoir 2 caméras. Une qui suit la lumière pour les ombres et une autre qui est notre point de vue

@@ -8,14 +8,16 @@ layout(location = 2) in vec2 aVertexTexCoords;
 uniform mat4 uMVPMatrix;
 uniform mat4 uMVMatrix;
 uniform mat4 uNormalMatrix;
-uniform mat4 uMVPLight;
+
 
 //variables de sorties
 out vec3 vViewPosition;
 out vec3 vViewNormal;
 out vec2 vTexCoords;
+
 //required only for shadow mapping
 out vec4 vLightSpacePos;
+uniform mat4 uMVPLight;
 
 
 void main() {
